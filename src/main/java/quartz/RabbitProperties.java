@@ -6,27 +6,55 @@ import java.util.Properties;
 
 public class RabbitProperties {
     private static final String PROPERTIES_LOCATION = "src/main//java/quartz/properties/rabbit.properties";
-    private static final Properties PROPERTIES = new Properties();
+    private static Properties properties = null;
     private static final String INTERVAL = "rabbit.interval";
+    private static final String URL = "url";
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
+    private static final String DRIVER = "driver-class-name";
 
     protected static Properties readProperties() {
+        if (properties != null) {
+            return properties;
+        }
         try {
+            properties = new Properties();
             InputStream stream = new FileInputStream(PROPERTIES_LOCATION);
-            PROPERTIES.load(stream);
-
+            properties.load(stream);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return PROPERTIES;
+        return properties;
     }
 
     protected static int interval() {
-        return Integer.parseInt(PROPERTIES.getProperty(INTERVAL));
+        readProperties();
+        return Integer.parseInt(properties.getProperty(INTERVAL));
+    }
+
+    public static String url() {
+        readProperties();
+        return String.valueOf(properties.get(URL));
+    }
+
+    public static String username() {
+        readProperties();
+        return String.valueOf(properties.get(USERNAME));
+    }
+
+    public static String password() {
+        readProperties();
+        return String.valueOf(properties.get(PASSWORD));
+    }
+
+    public static String driver() {
+        readProperties();
+        return String.valueOf(properties.get(DRIVER));
     }
 
     protected static String get(String key) {
-        return String.valueOf(PROPERTIES.get(key));
+        readProperties();
+        return String.valueOf(properties.get(key));
     }
-
 
 }
