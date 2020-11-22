@@ -17,16 +17,19 @@ public class SqlRuParse {
     private static final Locale RU = new Locale("ru");
 
     public static void main(String[] args) throws Exception {
-
-        Document doc = Jsoup.connect("https://www.sql.ru/forum/job-offers").get();
-        Elements row = doc.select(".forumTable").select("tr");
-        for (int i = 1; i < row.size(); i++) {
-            Element td = row.get(i);
-            Element href = td.select(".postslisttopic").get(0).child(0);
-            Element date = td.select(".altCol").get(1);
-            System.out.println(href.attr("href"));
-            System.out.println(String.format("%s, %s", href.text(), formatDate(stringToCalendar(date.text()))));
-            System.out.println();
+        int nrOfPagesToParse = 5;
+        for (int pageNr = 1; pageNr < nrOfPagesToParse + 1; pageNr++) {
+            String url = String.format("https://www.sql.ru/forum/job-offers/%s", pageNr);
+            Document doc = Jsoup.connect(url).get();
+            Elements row = doc.select(".forumTable").select("tr");
+            for (int i = 1; i < row.size(); i++) {
+                Element td = row.get(i);
+                Element href = td.select(".postslisttopic").get(0).child(0);
+                Element date = td.select(".altCol").get(1);
+                System.out.println(href.attr("href"));
+                System.out.println(String.format("%s, %s", href.text(), formatDate(stringToCalendar(date.text()))));
+                System.out.println();
+            }
         }
     }
 
