@@ -1,5 +1,5 @@
 create database aggregator;
-create table post
+create table forumTable
 (
     id      serial primary key,
     name    varchar(100) NOT NULL,
