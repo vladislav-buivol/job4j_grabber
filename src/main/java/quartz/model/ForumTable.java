@@ -33,13 +33,15 @@ public class ForumTable {
         if (i == 0) {
             throw new IllegalArgumentException("Row can not be smaller than 0");
         }
-        return new Post(unparsedRows.get(i));
+        Elements td = unparsedRows.get(i).select("td");
+        return new Post(new PostTopic(td.get(1)), new PostDate(td.get(5)));
     }
 
     public Post[] rows() {
         Post[] posts = new Post[size];
         for (int i = 0; i < size; i++) {
-            posts[i] = new Post(unparsedRows.get(i + 1));
+            Elements td = unparsedRows.get(i + 1).select("td");
+            posts[i] = new Post(new PostTopic(td.get(1)), new PostDate(td.get(5)));
         }
         return posts;
     }

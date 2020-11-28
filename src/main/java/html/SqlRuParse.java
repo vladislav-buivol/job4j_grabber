@@ -10,7 +10,7 @@ public class SqlRuParse {
             ForumTable forumTable = new ForumTable(String.format("https://www.sql.ru/forum/job-offers/%s", pageNr));
             for (Post post : forumTable.rows()) {
                 System.out.println(post.link());
-                System.out.println(post.text());
+                System.out.println(post.name());
                 System.out.println(String.format("%s %s %s", post.name(), post.created(), System.lineSeparator()));
             }
         }
