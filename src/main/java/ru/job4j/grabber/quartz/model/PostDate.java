@@ -1,4 +1,4 @@
-package quartz.model;
+package ru.job4j.grabber.quartz.model;
 
 import org.jsoup.nodes.Element;
 
@@ -11,7 +11,7 @@ import java.util.Locale;
 
 public class PostDate {
     private final String[] months = new String[]{"янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"};
-    private final Locale ru = new Locale("ru");
+    private final Locale ru = new Locale("ru/job4j/grabber");
 
     private final Element date;
 

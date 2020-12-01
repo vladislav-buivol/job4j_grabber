@@ -1,7 +1,7 @@
-package html;
+package ru.job4j.grabber;
 
-import quartz.model.ForumTable;
-import quartz.model.Post;
+import ru.job4j.grabber.quartz.model.ForumTable;
+import ru.job4j.grabber.quartz.model.Post;
 
 public class SqlRuParse {
     public static void main(String[] args) {

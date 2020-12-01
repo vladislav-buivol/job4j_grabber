@@ -1,4 +1,4 @@
-package quartz.model;
+package ru.job4j.grabber.quartz.model;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -46,15 +46,4 @@ public class ForumTable {
         return posts;
     }
 
-    public int getSize() {
-        return size;
-    }
-
-    public static void main(String[] args) throws IOException {
-        String url = String.format("https://www.sql.ru/forum/job-offers/%s", 1);
-        Document doc = Jsoup.connect(url).get();
-        ForumTable forumTable = new ForumTable(url);
-        System.out.println(forumTable.getRow(2));
-        //System.out.println(post);
-    }
 }

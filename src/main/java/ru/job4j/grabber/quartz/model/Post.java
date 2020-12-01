@@ -1,4 +1,4 @@
-package quartz.model;
+package ru.job4j.grabber.quartz.model;
 
 public class Post {
     private final String name;

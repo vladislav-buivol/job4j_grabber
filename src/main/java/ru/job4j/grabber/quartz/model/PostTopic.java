@@ -1,4 +1,4 @@
-package quartz.model;
+package ru.job4j.grabber.quartz.model;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

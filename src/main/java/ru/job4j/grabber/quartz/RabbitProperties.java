@@ -1,11 +1,11 @@
-package quartz;
+package ru.job4j.grabber.quartz;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class RabbitProperties {
-    private static final String PROPERTIES_LOCATION = "src/main//java/quartz/properties/rabbit.properties";
+    private static final String PROPERTIES_LOCATION = "src/main//java/ru.job4j.grabber.quartz/properties/rabbit.properties";
     private static Properties properties = null;
     private static final String INTERVAL = "rabbit.interval";
     private static final String URL = "url";

@@ -1,4 +1,4 @@
-package quartz;
+package ru.job4j.grabber.quartz;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;

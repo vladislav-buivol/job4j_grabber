@@ -1,4 +1,4 @@
-package quartz;
+package ru.job4j.grabber.quartz;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
