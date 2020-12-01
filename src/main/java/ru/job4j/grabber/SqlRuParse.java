@@ -1,18 +1,49 @@
 package ru.job4j.grabber;
 
-import ru.job4j.grabber.quartz.model.ForumTable;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.parser.Parser;
+import org.jsoup.select.Elements;
 import ru.job4j.grabber.quartz.model.Post;
+import ru.job4j.grabber.quartz.model.PostDate;
+import ru.job4j.grabber.quartz.model.PostTopic;
 
-public class SqlRuParse {
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SqlRuParse implements Parse {
     public static void main(String[] args) {
-        int nrOfPagesToParse = 5;
-        for (int pageNr = 1; pageNr < nrOfPagesToParse + 1; pageNr++) {
-            ForumTable forumTable = new ForumTable(String.format("https://www.sql.ru/forum/job-offers/%s", pageNr));
-            for (Post post : forumTable.rows()) {
-                System.out.println(post.link());
-                System.out.println(post.name());
-                System.out.println(String.format("%s %s %s", post.name(), post.created(), System.lineSeparator()));
-            }
+        SqlRuParse parse = new SqlRuParse();
+        String link = "https://www.sql.ru/forum/job-offers";
+        parse.list(link)
+                .forEach(System.out::println);
+    }
+
+    @Override
+    public List<Post> list(String link) {
+        Document doc = connect(link);
+        Elements unparsedRows = doc.select(".forumTable").select("tr");
+        List<Post> posts = new ArrayList<>();
+        for (int i = 0; i < unparsedRows.size() - 1; i++) {
+            posts.add(detail(unparsedRows.get(i + 1).toString()));
+        }
+        return posts;
+    }
+
+    @Override
+    public Post detail(String post) {
+        Element row = Jsoup.parse(post, "", Parser.xmlParser());
+        return new Post(new PostTopic(row.select("td").get(1)), new PostDate(row.select("td").get(5)));
+    }
+
+    private Document connect(String link) {
+        try {
+            return Jsoup.connect(link).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException(link);
         }
     }
 }
