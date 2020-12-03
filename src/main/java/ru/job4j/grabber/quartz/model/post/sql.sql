@@ -1,8 +1,8 @@
 create database aggregator;
-create table forumTable
+create table posts
 (
     id      serial primary key,
-    name    varchar(100) NOT NULL,
+    name    varchar NOT NULL,
     text    text,
     link    varchar      NOT NULL UNIQUE,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
