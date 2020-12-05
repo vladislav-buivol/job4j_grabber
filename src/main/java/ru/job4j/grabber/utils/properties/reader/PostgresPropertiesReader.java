@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class PostgresPropertiesReader {
-    static String propertiesLocation = System.getProperty("user.dir") + "/src/main/resources/aggregator/postgres.properties".replace("/", File.separator);
+    private static String propertiesLocation = System.getProperty("user.dir") + "/src/main/resources/aggregator/postgres.properties".replace("/", File.separator);
     static Properties properties = new Properties();
     private static final String DRIVER = "jdbc.driver";
     private static final String URL = "jdbc.url";
@@ -43,4 +43,7 @@ public class PostgresPropertiesReader {
         return String.valueOf(properties.get(key));
     }
 
+    public static String propertiesLocation() {
+        return propertiesLocation;
+    }
 }

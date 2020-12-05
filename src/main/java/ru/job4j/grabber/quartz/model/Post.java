@@ -5,6 +5,7 @@ import ru.job4j.grabber.PsqlStore;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Post {
     private final String name;
@@ -52,5 +53,25 @@ public class Post {
                 + ", created='" + dateFormat.format(created.getTime()) + '\''
                 + ", postText='" + postText + '\''
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Post)) {
+            return false;
+        }
+        Post post = (Post) o;
+        return Objects.equals(name, post.name)
+                && Objects.equals(link, post.link)
+                && Objects.equals(created, post.created)
+                && Objects.equals(postText, post.postText);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, link, created, postText);
     }
 }

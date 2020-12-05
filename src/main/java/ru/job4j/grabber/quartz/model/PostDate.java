@@ -13,10 +13,14 @@ public class PostDate {
     private final String[] months = new String[]{"янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"};
     private final Locale ru = new Locale("ru");
 
-    private final Element date;
+    private Element date;
 
     public PostDate(Element date) {
         this.date = date;
+    }
+
+    public PostDate() {
+
     }
 
     public String text() {
@@ -30,6 +34,10 @@ public class PostDate {
 
     public Calendar calendarDate() {
         return stringToCalendar(date.text());
+    }
+
+    public Calendar calendarDate(String date) {
+        return stringToCalendar(date);
     }
 
     private Calendar stringToCalendar(String dateString) {

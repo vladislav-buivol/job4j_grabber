@@ -11,12 +11,14 @@ import ru.job4j.grabber.quartz.model.PostTopic;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class SqlRuParse implements Parse {
     public static void main(String[] args) {
         SqlRuParse parse = new SqlRuParse();
         String link = "https://www.sql.ru/forum/job-offers";
+        parse.detail(link);
         parse.list(link)
                 .forEach(System.out::println);
     }
@@ -27,15 +29,28 @@ public class SqlRuParse implements Parse {
         Elements unparsedRows = doc.select(".forumTable").select("tr");
         List<Post> posts = new ArrayList<>();
         for (int i = 0; i < unparsedRows.size() - 1; i++) {
-            posts.add(detail(unparsedRows.get(i + 1).toString()));
+            Element row = unparsedRows.get(i + 1);
+            PostTopic topic = new PostTopic(row.select("td").get(1));
+            PostDate date = new PostDate(row.select("td").get(5));
+            posts.add(new Post(topic, date));
         }
         return posts;
     }
 
     @Override
-    public Post detail(String post) {
-        Element row = Jsoup.parse(post, "", Parser.xmlParser());
-        return new Post(new PostTopic(row.select("td").get(1)), new PostDate(row.select("td").get(5)));
+    public Post detail(String link) {
+        try {
+            Document postDetails = Jsoup.connect(link).get();
+            String postHeader = postDetails.select(".messageHeader").get(0).text();
+            String time = postDetails.select(".msgFooter").get(0).text().split("\\[")[0];
+            Calendar date = new PostDate().calendarDate(time);
+            String postText = postDetails.select(".msgBody").get(1).text();
+            return new Post(postHeader, link, date, postText);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Unable to get post text");
+        }
+
     }
 
     private Document connect(String link) {
