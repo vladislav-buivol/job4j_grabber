@@ -12,6 +12,7 @@ public class PostgresPropertiesReader {
     private static final String URL = "jdbc.url";
     private static final String USERNAME = "jdbc.username";
     private static final String PASSWORD = "jdbc.password";
+    private static final String PORT = "port";
 
     public Properties readProperties() {
         try {
@@ -37,6 +38,10 @@ public class PostgresPropertiesReader {
 
     public static String password() {
         return String.valueOf(properties.get(PASSWORD));
+    }
+
+    public static String port() {
+        return String.valueOf(properties.get(PORT));
     }
 
     public static String getByKey(String key) {
