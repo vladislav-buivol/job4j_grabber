@@ -23,6 +23,7 @@ public class Grabber implements Grab {
     private Store store;
     private Predicate<String> saveCondition;
     private Predicate<String> defaultCondition = Pattern.compile("\\b(java[^A-Za-z])|(java)\\b").asPredicate();
+    private static final String ENCODING = "cp1251";
 
 
     public Grabber(String link, String propertiesLocation, Predicate<String> saveCondition) {
@@ -37,7 +38,6 @@ public class Grabber implements Grab {
     }
 
     public void web(Store store) {
-        String encoding = "cp1251";
         new Thread(() -> {
             try (ServerSocket server = new ServerSocket(Integer.parseInt(cfg.getProperty("port")))) {
                 while (!server.isClosed()) {
@@ -45,8 +45,8 @@ public class Grabber implements Grab {
                     try (OutputStream out = socket.getOutputStream()) {
                         out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                         for (Post post : store.getAll()) {
-                            out.write(post.toString().getBytes(encoding));
-                            out.write(System.lineSeparator().getBytes(encoding));
+                            out.write(post.toString().getBytes(ENCODING));
+                            out.write(System.lineSeparator().getBytes(ENCODING));
                         }
                     } catch (IOException io) {
                         io.printStackTrace();
