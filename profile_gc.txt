@@ -1,0 +1,23 @@
+2.
+jps - использовал для получения pid
+
+jmap
+jhsdb jmap --heap --pid <pid>
+Показывает с какими конфигурациями была запущена программа и показывает заполненность для: поколений (Young/old generation), heap, survivor
+
+jmap -dump:format=b,file=cheap.hprof 18476 - дает информацию про dump машины
+
+jstat
+jstat -gc 18476
+Показывает состояние ячеек  памяти
+
+jstack
+jhsdb jstack --mixed --pid 18476
+Показывает состояние потока, запущенные процессы, а также информацию о deadlock
+
+
+3.
+Получил OutOfMemoryError со следующими ключами
+-server -Xmx2050K
+
+При OutOfMemoryError VM использует 99.443% памяти. Состояние машины DestroyJavaVM
